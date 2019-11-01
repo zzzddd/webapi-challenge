@@ -34,6 +34,19 @@ router.put("/:id", validateAction, (req, res) => {
     });
 });
 
+
+// POST /api/actions endpoint to Create a new Action - FUNCTIONAL
+router.post("/", validateAction, (req, res) => {
+  Actions.insert(req.body)
+    .then(action => {
+      res.status(201).json(action);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Error adding the Actions" });
+    });
+});
+
 // DELETE /api/actions/:id endpoint to Delete an action
 router.delete("/:id", (req, res) => {
   Actions.remove(req.params.id)
