@@ -18,6 +18,23 @@ router.get("/", (req, res) => {
     });
 });
 
+// GET /api/actions/:id endpoint to Retrieve actions by id - FUNCTIONAL
+router.get("/:id", (req, res) => {
+  Actions.get(req.params.id)
+    .then(action => {
+      if (action) {
+        res.status(200).json(action);
+      } else {
+        res.status(404).json({ message: "action not found" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Error retrieving the action" });
+    });
+});
+
+
 // PUT /api/actions/:id endpoint to Update an action - FUNCTIONAL
 router.put("/:id", validateAction, (req, res) => {
   Actions.update(req.params.id, req.body)

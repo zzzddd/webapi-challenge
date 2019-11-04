@@ -33,6 +33,21 @@ router.post("/", validateProject, (req, res) => {
     });
 });
 
+router.get("/:id", (req, res) => {
+  Projects.get(req.params.id)
+    .then(project => {
+      if (project) {
+        res.status(200).json(project);
+      } else {
+        res.status(404).json({ message: "project not found" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Error retrieving the project" });
+    });
+});
+
 // PUT /api/projects/:id endpoint to Update a project - FUNCTIONAL
 router.put("/:id", validateProject, (req, res) => {
   Projects.update(req.params.id, req.body)
